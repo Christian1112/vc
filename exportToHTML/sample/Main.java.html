@@ -1,0 +1,300 @@
+<html>
+<head>
+<title>Main.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+.s1 { color: #cc7832;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Main.java</font>
+</center></td></tr></table>
+<pre>
+
+<span class="s1">import </span><span class="s0">javafx.application.Application</span><span class="s1">;</span>
+
+import <span class="s0">javafx.beans.value.ChangeListener</span><span class="s1">;</span>
+
+import <span class="s0">javafx.beans.value.ObservableValue</span><span class="s1">;</span>
+
+import <span class="s0">javafx.collections.FXCollections</span><span class="s1">;</span>
+
+import <span class="s0">javafx.collections.ObservableList</span><span class="s1">;</span>
+
+import <span class="s0">javafx.geometry.Insets</span><span class="s1">;</span>
+
+import <span class="s0">javafx.geometry.Pos</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.Cursor</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.Scene</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.control.*</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.image.Image</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.image.ImageView</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.layout.HBox</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.layout.VBox</span><span class="s1">;</span>
+
+import <span class="s0">javafx.scene.text.Text</span><span class="s1">;</span>
+
+import <span class="s0">javafx.stage.Stage</span><span class="s1">;</span>
+
+
+
+import <span class="s0">java.io.BufferedWriter</span><span class="s1">;</span>
+
+import <span class="s0">java.io.FileWriter</span><span class="s1">;</span>
+
+import <span class="s0">java.io.IOException</span><span class="s1">;</span>
+
+import <span class="s0">java.nio.file.Files</span><span class="s1">;</span>
+
+import <span class="s0">java.nio.file.Path</span><span class="s1">;</span>
+
+import <span class="s0">java.nio.file.Paths</span><span class="s1">;</span>
+
+import <span class="s0">java.util.ArrayList</span><span class="s1">;</span>
+
+
+
+public class <span class="s0">Main </span><span class="s1">extends </span><span class="s0">Application {</span>
+
+    @Override
+
+    <span class="s1">public void </span><span class="s0">start(Stage primaryStage) </span><span class="s1">throws </span><span class="s0">Exception{</span>
+
+        primaryStage.setTitle(<span class="s2">&quot;Set action prices&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+
+
+        <span class="s0">ObservableList&lt;Product&gt; items = FXCollections.observableArrayList (</span>
+
+                <span class="s1">new </span><span class="s0">Product(</span><span class="s2">&quot;Pfeffer&quot;</span><span class="s1">, </span><span class="s2">&quot;1 Stück&quot;</span><span class="s1">, </span><span class="s3">3.49</span><span class="s1">, </span><span class="s3">2.79</span><span class="s1">, </span><span class="s2">&quot;/ressources/Pfeffer.jpg&quot;</span><span class="s1">, </span><span class="s2">&quot;Schwarzer Pfeffer verleiht Ihren Speisen eine pikante Schärfe, &quot; </span><span class="s0">+ </span><span class="s2">&quot;besonders</span><span class="s1">\n</span><span class="s2">wenn er länger mitgekocht wird.&quot;</span><span class="s0">)</span><span class="s1">,</span>
+
+                new <span class="s0">Product(</span><span class="s2">&quot;Schafmilchkäse&quot;</span><span class="s1">, </span><span class="s2">&quot;200 Gramm Packung&quot;</span><span class="s1">, </span><span class="s3">2.59</span><span class="s1">, </span><span class="s3">1.99</span><span class="s1">, </span><span class="s2">&quot;/ressources/Salakis.jpg&quot;</span><span class="s1">, </span><span class="s2">&quot;Hier gibt es keine Beschreibung, weil unsere &quot; </span><span class="s0">+ </span><span class="s2">&quot;Handelskette kennt sich nur</span><span class="s1">\n</span><span class="s2">bedingt damit aus, wie man eine Werbebeschreibung schreibt.&quot;</span><span class="s0">)</span><span class="s1">,</span>
+
+                new <span class="s0">Product(</span><span class="s2">&quot;Vöslauer&quot;</span><span class="s1">, </span><span class="s2">&quot;1.5 Liter Flasche&quot;</span><span class="s1">, </span><span class="s3">0.75</span><span class="s1">, </span><span class="s3">0.49</span><span class="s1">, </span><span class="s2">&quot;/ressources/voslauer.jpg&quot;</span><span class="s1">, </span><span class="s2">&quot;Spritziges Vöslauer Mineralwasser.&quot;</span><span class="s0">)</span><span class="s1">,</span>
+
+                new <span class="s0">Product(</span><span class="s2">&quot;Zucker&quot;</span><span class="s1">, </span><span class="s2">&quot;500 Gramm Paket&quot;</span><span class="s1">, </span><span class="s3">1.39</span><span class="s1">, </span><span class="s3">0.89</span><span class="s1">, </span><span class="s2">&quot;/ressources/zucker.jpg&quot;</span><span class="s1">, </span><span class="s2">&quot;Natürliches Gelieren wird durch Apfelpektin unterstützt,&quot; </span><span class="s0">+ </span><span class="s2">&quot; welches im</span><span class="s1">\n</span><span class="s2">richtigen Verhältnis mit Zitronensäure und Kristallzucker abgemischt wurde.&quot;</span><span class="s0">))</span><span class="s1">;</span>
+
+
+
+
+
+        <span class="s0">ListView&lt;Product&gt; productList = </span><span class="s1">new </span><span class="s0">ListView&lt;&gt;()</span><span class="s1">;</span>
+
+        <span class="s0">productList.setItems(items)</span><span class="s1">;</span>
+
+
+
+        <span class="s0">Label label1 = </span><span class="s1">new </span><span class="s0">Label(</span><span class="s2">&quot;Prod. Name&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">TextField textfield1 = </span><span class="s1">new </span><span class="s0">TextField()</span><span class="s1">;</span>
+
+        <span class="s0">textfield1.setEditable(</span><span class="s1">false</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">textfield1.setCursor(Cursor.OPEN_HAND)</span><span class="s1">;</span>
+
+
+        <span class="s0">HBox hBox = </span><span class="s1">new </span><span class="s0">HBox(label1</span><span class="s1">, </span><span class="s0">textfield1)</span><span class="s1">;</span>
+
+        <span class="s0">hBox.setAlignment(Pos.CENTER_LEFT)</span><span class="s1">;</span>
+
+        <span class="s0">hBox.setSpacing(</span><span class="s3">20</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">hBox.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">20</span><span class="s1">,</span><span class="s3">20</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s0">))</span><span class="s1">;</span>
+
+
+
+        <span class="s0">Label label2 = </span><span class="s1">new </span><span class="s0">Label(</span><span class="s2">&quot;Quantity&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">TextField textfield2 = </span><span class="s1">new </span><span class="s0">TextField()</span><span class="s1">;</span>
+
+        <span class="s0">textfield2.setEditable(</span><span class="s1">false</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">textfield2.setCursor(Cursor.OPEN_HAND)</span><span class="s1">;</span>
+
+        <span class="s0">Button button1 = </span><span class="s1">new </span><span class="s0">Button(</span><span class="s2">&quot;Update&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+
+        <span class="s0">HBox hBox1= </span><span class="s1">new </span><span class="s0">HBox(label2</span><span class="s1">, </span><span class="s0">textfield2)</span><span class="s1">;</span>
+
+        <span class="s0">hBox1.setAlignment(Pos.CENTER_LEFT)</span><span class="s1">;</span>
+
+        <span class="s0">hBox1.setSpacing(</span><span class="s3">20</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">hBox1.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">20</span><span class="s1">,</span><span class="s3">20</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s0">))</span><span class="s1">;</span>
+
+
+
+        <span class="s0">Label label3 = </span><span class="s1">new </span><span class="s0">Label(</span><span class="s2">&quot;Old Price&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">label3.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s0">))</span><span class="s1">;</span>
+
+        <span class="s0">TextField textfield3 = </span><span class="s1">new </span><span class="s0">TextField()</span><span class="s1">;</span>
+
+        <span class="s0">button1.setPrefWidth(</span><span class="s3">90</span><span class="s0">)</span><span class="s1">;</span>
+
+
+        <span class="s0">HBox hBoxUpdate = </span><span class="s1">new </span><span class="s0">HBox(button1)</span><span class="s1">;</span>
+
+        <span class="s0">hBoxUpdate.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">30</span><span class="s0">))</span><span class="s1">;</span>
+
+
+        <span class="s0">Label label4 = </span><span class="s1">new </span><span class="s0">Label(</span><span class="s2">&quot;EUR&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+
+        <span class="s0">HBox hBox2 = </span><span class="s1">new </span><span class="s0">HBox(label3</span><span class="s1">, </span><span class="s0">textfield3</span><span class="s1">, </span><span class="s0">label4</span><span class="s1">, </span><span class="s0">hBoxUpdate)</span><span class="s1">;</span>
+
+        <span class="s0">hBox2.setAlignment(Pos.CENTER_LEFT)</span><span class="s1">;</span>
+
+        <span class="s0">hBox2.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">20</span><span class="s1">,</span><span class="s3">20</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s0">))</span><span class="s1">;</span>
+
+
+
+        <span class="s0">Label label5 = </span><span class="s1">new </span><span class="s0">Label(</span><span class="s2">&quot;New Price&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">label5.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s0">))</span><span class="s1">;</span>
+
+        <span class="s0">TextField textfield4 = </span><span class="s1">new </span><span class="s0">TextField()</span><span class="s1">;</span>
+
+        <span class="s0">Button button2 = </span><span class="s1">new </span><span class="s0">Button(</span><span class="s2">&quot;Save&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+
+        <span class="s0">HBox hBox3 = </span><span class="s1">new </span><span class="s0">HBox(button2)</span><span class="s1">;</span>
+
+        <span class="s0">hBox3.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">30</span><span class="s0">))</span><span class="s1">;</span>
+
+        <span class="s0">button2.setPrefWidth(</span><span class="s3">90</span><span class="s0">)</span><span class="s1">;</span>
+
+
+        <span class="s0">Label label6 = </span><span class="s1">new </span><span class="s0">Label(</span><span class="s2">&quot;EUR&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+
+        <span class="s0">HBox hBox4 = </span><span class="s1">new </span><span class="s0">HBox(label4</span><span class="s1">, </span><span class="s0">textfield4</span><span class="s1">, </span><span class="s0">label6</span><span class="s1">, </span><span class="s0">hBox3)</span><span class="s1">;</span>
+
+        <span class="s0">hBox3.setAlignment(Pos.CENTER_LEFT)</span><span class="s1">;</span>
+
+        <span class="s0">hBox3.setSpacing(</span><span class="s3">0</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">hBox3.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">20</span><span class="s1">,</span><span class="s3">20</span><span class="s1">,</span><span class="s3">10</span><span class="s1">,</span><span class="s3">20</span><span class="s0">))</span><span class="s1">;</span>
+
+
+
+        <span class="s0">ImageView imageView = </span><span class="s1">new </span><span class="s0">ImageView()</span><span class="s1">;</span>
+
+        <span class="s0">imageView.setFitHeight(</span><span class="s3">200</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">imageView.setFitWidth(</span><span class="s3">200</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">HBox hBox5 = </span><span class="s1">new </span><span class="s0">HBox(imageView)</span><span class="s1">;</span>
+
+        <span class="s0">hBox4.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s0">))</span><span class="s1">;</span>
+
+
+
+        <span class="s0">Label label7 = </span><span class="s1">new </span><span class="s0">Label(</span><span class="s2">&quot;Description&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">label6.setStyle(</span><span class="s2">&quot;-fx-font-size: 2em;&quot;</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">label6.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s0">))</span><span class="s1">;</span>
+
+        <span class="s0">Text text = </span><span class="s1">new </span><span class="s0">Text()</span><span class="s1">;</span>
+
+
+        <span class="s0">HBox hBox6 = </span><span class="s1">new </span><span class="s0">HBox(text)</span><span class="s1">;</span>
+
+        <span class="s0">hBox6.setPadding(</span><span class="s1">new </span><span class="s0">Insets(</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">0</span><span class="s1">,</span><span class="s3">20</span><span class="s0">))</span><span class="s1">;</span>
+
+
+
+
+
+        <span class="s0">productList.getSelectionModel().selectedItemProperty().addListener(</span><span class="s1">new </span><span class="s0">ChangeListener&lt;Product&gt;() {</span>
+
+            <span class="s1">public void </span><span class="s0">changed(ObservableValue&lt;? </span><span class="s1">extends </span><span class="s0">Product&gt; ov</span><span class="s1">,</span>
+
+                                <span class="s0">Product old_val</span><span class="s1">, </span><span class="s0">Product new_val) {</span>
+
+                textfield1.setText(new_val.getName())<span class="s1">;</span>
+
+                <span class="s0">textfield2.setText(new_val.getQuantity())</span><span class="s1">;</span>
+
+                <span class="s0">textfield3.setText(new_val.getOldPrice())</span><span class="s1">;</span>
+
+                <span class="s0">textfield4.setText(new_val.getnewPrice())</span><span class="s1">;</span>
+
+                <span class="s0">imageView.setImage(</span><span class="s1">new </span><span class="s0">Image(</span><span class="s1">this</span><span class="s0">.getClass().getResourceAsStream(new_val.getImage())))</span><span class="s1">;</span>
+
+                <span class="s0">text.setText(new_val.getDescription())</span><span class="s1">;</span>
+
+            <span class="s0">}</span>
+
+        })<span class="s1">;</span>
+
+        <span class="s0">button1.setOnAction(event -&gt; {</span>
+
+            <span class="s1">int </span><span class="s0">selectIndex = productList.getSelectionModel().getSelectedIndex()</span><span class="s1">;</span>
+
+            if <span class="s0">(selectIndex != -</span><span class="s3">1</span><span class="s0">) {</span>
+
+                String oldPrice = textfield3.getText()<span class="s1">;</span>
+
+                <span class="s0">String newPrice = textfield4.getText()</span><span class="s1">;</span>
+
+                <span class="s0">productList.getItems().get(selectIndex).setOldPrice(oldPrice)</span><span class="s1">;</span>
+
+                <span class="s0">productList.getItems().get(selectIndex).setNewPrice(newPrice)</span><span class="s1">;</span>
+
+                <span class="s0">productList.refresh()</span><span class="s1">;</span>
+
+            <span class="s0">}</span>
+
+        })<span class="s1">;</span>
+
+        <span class="s0">button2.setOnAction(event -&gt; {</span>
+
+            saveInFile(items)<span class="s1">;</span>
+
+        <span class="s0">})</span><span class="s1">;</span>
+
+
+
+
+        <span class="s0">VBox all = </span><span class="s1">new </span><span class="s0">VBox(hBox1</span><span class="s1">, </span><span class="s0">hBox2</span><span class="s1">, </span><span class="s0">hBox3</span><span class="s1">, </span><span class="s0">hBox4</span><span class="s1">, </span><span class="s0">label7</span><span class="s1">, </span><span class="s0">hBox5)</span><span class="s1">;</span>
+
+        <span class="s0">all.setPrefSize(</span><span class="s3">400</span><span class="s1">, </span><span class="s3">500</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">HBox alltogether = </span><span class="s1">new </span><span class="s0">HBox(all</span><span class="s1">, </span><span class="s0">productList)</span><span class="s1">;</span>
+
+        <span class="s0">alltogether.setSpacing(</span><span class="s3">40</span><span class="s0">)</span><span class="s1">;</span>
+
+
+
+        <span class="s0">Scene scene = </span><span class="s1">new </span><span class="s0">Scene(alltogether</span><span class="s1">, </span><span class="s3">700</span><span class="s1">, </span><span class="s3">500</span><span class="s0">)</span><span class="s1">;</span>
+
+        <span class="s0">primaryStage.setScene(scene)</span><span class="s1">;</span>
+
+        <span class="s0">primaryStage.show()</span><span class="s1">;</span>
+
+    <span class="s0">}</span>
+
+
+
+    <span class="s1">public static void </span><span class="s0">main(String[] args) {</span>
+
+        Application.launch(args)<span class="s1">;</span>
+
+    <span class="s0">}}</span></pre>
+</body>
+</html>
